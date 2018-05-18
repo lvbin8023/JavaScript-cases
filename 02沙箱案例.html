@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>这是div</div>
+    <div>这是div</div>
+    <div>这是div</div>
+    <p>这是p</p>
+    <p>这是p</p>
+    <p>这是p</p>
+    <script>
+        var getTag = 10;
+        var dvObjs = 20;
+        var pObjs = 30;
+
+        (function () {
+            //根据标签名字获取元素
+            function getTag(tagName) {
+                return document.getElementsByTagName(tagName);
+            }
+            //获取所有的div
+            var dvObjs = getTag("div");
+            for (var i = 0; i < dvObjs.length; i++) {
+                dvObjs[i].style.border = "2px solid pink";
+                dvObjs[i].style.fontSize = "25px";
+            }
+
+            var pObjs = getTag("p");
+            for (var i = 0; i < pObjs.length; i++) {
+                pObjs[i].style.border = "1px solid red";
+                pObjs[i].style.fontSize = "20px";
+            }
+        }())
+
+        console.log(getTag);
+        console.log(dvObjs);
+        console.log(pObjs);
+    </script>
+</body>
+
+</html>
