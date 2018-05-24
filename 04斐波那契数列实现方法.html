@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        //斐波那契数列，又叫“兔子”数列。
+        //一个农场，把一对兔子关在房间里。已知一对兔子每个月可以生一对兔子，
+        //而一对兔子从出生后第三个月起每月生一对兔子。假如一年内兔子无死亡现象，
+        //那么，一对兔子一年内(12个月)可以生多少对兔子
+        //兔子的规律为数列：1,1,2,3,5,8,13,21....
+
+        //首先从第三个月起，每个月的值就是前两个月的和
+        // var num1=1;
+        // var num2=1;
+        // var sum=num1+num2;
+
+        var num1, num2, sum;
+        num1 = num2 = 1;
+
+        //i=3是从第三个月起
+        for (i = 3; i <= 12; i++) {
+            sum = num1 + num2;
+            num1 = num2;
+            num2 = sum;
+        }
+        console.log(sum);//12个月有144对兔子
+
+
+
+
+        //另一种方法,使用递归。n为某个月的值
+        function feibo(n) {
+            //第一个月和第二个月的的兔子数量都是一对，以第三个月分界点判断
+            if (n == 1 | n == 2) {
+                return 1;
+            }
+            //使用公式feibo(n)=feibo(n-1)+feibo(n-2),结束条件feibo(2) =1, feibo(1) = 1
+            return feibo(n - 1) + feibo(n - 2);
+        }
+
+        console.log(feibo(12));//12个月有144对兔子
+        //feibo(12)=feib
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
