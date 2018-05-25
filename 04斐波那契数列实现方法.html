@@ -43,7 +43,29 @@
         }
 
         console.log(feibo(12));//12个月有144对兔子
-        //feibo(12)=feib
+        
+        //例如计算fib(5)时 要计算fib(4)+fib(3) 而fib(4)= fib(3)+fib(2)
+        //如果按照上面的代码 fib(3) 会计算两次。我们可以把已经计算过存储在一个数组中，在需要的时候直接用，不用重新计算。
+        //实现思路： 定义一个缓存数组，存储已经计算过的数列,每次计算前看看数组里有没有。
+        //如果有直接用如果没有就计算，然后存在数组，以便下一次计算使用
+        
+        //缓存数组
+        var cache = [];
+
+        function feibo(n) {
+            //如果第n项的值不等于undefined，那么则返回这个项的值，存储到数组当中去
+            if (cache[n] !== undefined) {
+                return cache[n];
+            }
+            if (n <= 2) {
+                cache[n] = 1;
+                return 1;
+            }
+            cache.push(feibo(n - 1) + feibo(n - 2));
+            return cache[n];
+        }
+
+        console.log(feibo(12));//144
     </script>
 </head>
 
