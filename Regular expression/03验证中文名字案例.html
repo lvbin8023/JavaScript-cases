@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+请输入您的名字：<input type="text" value="" id="userName"/>*<br/>
+<script>
+
+    //如果输入的名字是中文，则为绿色，否则为红色
+    document.getElementById("userName").onblur = function () {
+        var reg = /^[\u4e00-\u9fa5]{2,6}$/;
+        if (reg.test(this.value)) {
+            this.style.backgroundColor = "green";
+        } else {
+            this.style.backgroundColor = "red";
+        }
+    };
+
+    //验证中文名字：[\u4e00-\u9fa5]  表示 [一-龥]
+</script>
+</body>
+</html>
