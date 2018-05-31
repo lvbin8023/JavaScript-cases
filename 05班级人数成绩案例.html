@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //案例：提示用户输入班级人数，求总成绩，平均分数，最高分，最低分。
+
+        //提示用户输入人数，并转成数字类型
+        var perCount = parseInt(prompt("请输入班级人数"));
+        //定义数组并储存班级每个人的成绩
+        var perScores = [];
+        //循环遍历的方式录入每个人的成绩
+        for (var i = 0; i < perCount; i++) {
+            //把每个人的成绩储存到数组中
+            perScores[perScores.length] = parseInt(prompt("请输入第" + (i + 1) + "个人的成绩："));
+        }
+
+        //总分
+        var sum = 0;
+        //平均分钟
+        var avg = 0;
+        //假设最高分数为第一个
+        var max = perScores[0];
+        //假设最低分数为第一个
+        var min = perScores[0];
+
+        //循环遍历班级里每个人的分数
+        for (var i = 0; i < perScores.length; i++) {
+            //每个人的分数加起来就是总分
+            sum += perScores[i];
+            //总分除以分数的个数
+            avg = sum / perScores.length;
+            //和每个分数作比较，求最高分
+            if (max < perScores[i]) {
+                max = perScores[i];
+            }
+            //和每个分数作比较，求最高分
+            if (min > perScores[i]) {
+                min = perScores[i];
+            }
+        }
+
+        //输出结果：
+        console.log("班级人数为：" + perCount);
+        console.log("分数分别为：" + perScores);
+        console.log("总分为：" + sum);
+        console.log("平均分数为：" + avg);
+        console.log("最高分数为：" + max);
+        console.log("最分数小为：" + min);
+    </script>
+</body>
+
+</html>
