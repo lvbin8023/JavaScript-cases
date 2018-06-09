@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<input type="button" value="隔行变色" id="btn">
+<ul id="uu">
+    <li>这是li标签1</li>
+    <li>这是li标签2</li>
+    <li>这是li标签3</li>
+    <li>这是li标签4</li>
+    <li>这是li标签5</li>
+    <li>这是li标签6</li>
+    <li>这是li标签7</li>
+    <li>这是li标签8</li>
+</ul>
+<script>
+    function my$(id) {
+        return document.getElementById(id);
+    }
+
+    //第一种方法，使用节点childNodes操作
+    my$("btn").onclick = function () {
+        var count = 0;//记录有多少个li
+        //获取ul中所有的子节点
+        var nodes = my$("uu").childNodes;
+        for (var i = 0; i < nodes.length; i++) {
+            //判断这个节点是不是li标签
+            if (nodes[i].nodeType == 1 && nodes[i].nodeName == "LI") {
+                if (count % 2 == 0) {
+                    nodes[i].style.backgroundColor = "red";
+                } else {
+                    nodes[i].style.backgroundColor = "yellow";
+                }
+                count++;//8个li
+            }//end if
+        }//end for
+    };//end function
+
+
+    //第二种方法，使用元素children操作
+    my$("btn").onclick = function () {
+        var nodes = my$("uu").children;
+        for (var i = 0; i < nodes.length; i++) {
+            if (i % 2 == 0) {
+                nodes[i].style.backgroundColor = "red";
+            } else {
+                nodes[i].style.backgroundColor = "yellow";
+            }//end else
+        }//end for
+    }//end function
+</script>
+</body>
+</html>
