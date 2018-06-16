@@ -103,18 +103,18 @@
 
     function getTime() {
         var day = new Date();
-        var year = day.getFullYear();//年
-        var month = day.getMonth() + 1;//月
-        var dat = day.getDate();//日
-        var hour = day.getHours();//小时
-        var minitue = day.getMinutes();//分钟
-        var second = day.getSeconds();//秒
-        month = month < 10 ? "0" + month : month;
-        dat = dat < 10 ? "0" + dat : dat;
-        hour = hour < 10 ? "0" + hour : hour;
-        minitue = minitue < 10 ? "0" + minitue : minitue;
-        second = second < 10 ? "0" + second : second;
-        my$("span").innerText = year + "-" + month + "-" + dat + " " + hour + ":" + minitue + ":" + second
+        var year = day.getFullYear();//获取年
+        var month = day.getMonth() + 1;//获取月
+        var dat = day.getDate();//获取日
+        var hour = day.getHours();//获取小时
+        var minitue = day.getMinutes();//获取分钟
+        var second = day.getSeconds();//获取秒
+        month = month < 10 ? "0" + month : month;//判断月份是几位数，小于10月month前面加0，大于10月为month
+        dat = dat < 10 ? "0" + dat : dat;//判断日期是几位数，小于10号dat前面加0，大于10号为日期dat
+        hour = hour < 10 ? "0" + hour : hour;//判断时钟是几位数，小于10点hour前面加0，大于10点为小时hour
+        minitue = minitue < 10 ? "0" + minitue : minitue;//判断分钟是几位数，小于10分minitue前面加0，大于10分钟为分钟minitue
+        second = second < 10 ? "0" + second : second;//判断秒是几位数，小于10秒second前面加0，大于10秒为秒second
+        my$("span").innerText = year + "-" + month + "-" + dat + " " + hour + ":" + minitue + ":" + second//添加到span标签中
     }
 
 </script>
