@@ -64,30 +64,55 @@ let hash = {
     'n': 'www.netflix.com',
     'm': 'www.mclaren.com'
 };
-
-let divWrapper = document.getElementById('wrapper');
-
-index = 0;
-while (index < arr['length']) {
-    let div1 = document.createElement('div');
-    divWrapper.append(div1);
-    row = arr[index];
-    console.log(row.length);
-    index2 = 0;
-    while (index2 < row.length) {
-        let divKbd = document.createElement('kbd');
-        divKbd.textContent = row[index2];
-        div1.append(divKbd);
-        index2++;
-    }
-    index++;
+let hashInStorage = JSON.parse(localStorage.getItem('backup'||'null'));
+if (hashInStorage) {
+    let hash = hashInStorage;
 }
 
+// 获取id
+let divWrapper = document.getElementById('wrapper');
+// 遍历数组
+for (let i = 0; i < arr.length; i++) {
+    // 创建div标签
+    let divContainer = document.createElement('div');
+    // 将创建的div标签添加到id为wrapper的div标签中
+    divWrapper.appendChild(divContainer);
+    // 把每次遍历出来的数组存储到row中
+    let row = arr[i];
+    // 遍历每个数组row
+    for (let j = 0; j < row.length; j++) {
+        // 创建kbd标签
+        let kbd = document.createElement('kbd');
+        // 添加内容到kbd标签中
+        kbd.textContent = row[j];
+        // 创建button标签
+        let kbdButton = document.createElement('button');
+        // 添加内容到button标签中
+        kbdButton.textContent = '编辑';
+        // 添加button标签到kbd标签中
+        kbd.appendChild(kbdButton);
+        // 将kbd标签添加到divContainer中
+        divContainer.appendChild(kbd);
+        // 将row[j]绑定到button的id上
+        kbdButton.id = row[j];
+        // 注册button标签的点击事件
+        kbdButton.onclick = function (event) {
+            // 把每次编辑button的id保存在key中
+            let key = event.target.id;
+            // 把每次输入的网址存储到webUrl中
+            let webUrl = prompt('请输入网址');
+            // 把webUrl保存到hash中
+            hash[key] = webUrl;
+            localStorage.setItem('backup',JSON.stringify(hash))
+        }
+    }
+}
+
+// 注册页面按键按下的事件
 document.onkeypress = function (event) {
+    // 保存每次按下的每个按键信息
     let keys = event.key;
-    console.log(keys);
+    // 将hash中的网址保存到webSite中
     let webSite = hash[keys];
-    console.log(webSite);
-    // location.href = 'http://'+webSite;
-    window.open('http://' + webSite, '_blank');
+    window.open('http://'+webSite,'_blank');
 };
