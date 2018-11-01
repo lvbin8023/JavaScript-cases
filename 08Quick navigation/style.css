@@ -47,7 +47,6 @@ body {
 }
 
 kbd {
-    border: 1px solid red;
     width: 4em;
     height: 4em;
     display: inline-block;
@@ -56,6 +55,7 @@ kbd {
 }
 
 kbd > button {
+    font-size: 5px;
     position: absolute;
     right: 0;
     bottom: 0;

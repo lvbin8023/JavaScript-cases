@@ -1,3 +1,4 @@
+// 1、初始化数据
 let arr = {
     0: {
         0: 'q',
@@ -65,41 +66,30 @@ let hash = {
     'm': 'www.mclaren.com'
 };
 // 取出localStorage中的backup对应的hash
-let hashInStorage = JSON.parse(localStorage.getItem('backup' || 'null'));
+let hashInStorage = getFromLocalStorage('backup');
 if (hashInStorage) {
     let hash = hashInStorage;
 }
 
+// 2、生成键盘
 // 获取id
 let divWrapper = document.getElementById('wrapper');
 // 遍历数组
 for (let i = 0; i < arr.length; i++) {
-    // 创建div标签
-    let divContainer = document.createElement('div');
-    // 为每行div添加样式
-    divContainer.className = 'row';
-    // 将创建的div标签添加到id为wrapper的div标签中
-    divWrapper.appendChild(divContainer);
+    // 创建div标签,添加样式,将div标签添加到divWrapper中
+    let divContainer = creatTag('div', 'row', null, divWrapper);
     // 把每次遍历出来的数组存储到row中
     let row = arr[i];
     // 遍历每个数组row
     for (let j = 0; j < row.length; j++) {
-        // 创建kbd标签
-        let kbd = document.createElement('kbd');
-        // 将kbd标签添加到divContainer中
-        divContainer.appendChild(kbd);
-        // 添加样式
-        kbd.className = 'key';
-        // 创建span标签
-        let span = document.createElement('span');
-        // 添加内容到span标签中
-        span.textContent = row[j];
-        // 添加span标签到kbd标签中
-        kbd.appendChild(span);
-        // 添加样式
-        span.className = 'text';
-        // 创建img标签
-        let img = document.createElement('img');
+        // 创建kbd标签,添加样式,将kbd标签添加到divContainer中
+        let kbd = creatTag('kbd', 'key', null, divContainer);
+
+        // 创建span标签,添加样式,添加内容到span标签中,将span标签添加到kbd中
+        let span = creatTag('span', 'text', row[j], kbd);
+
+        // 创建img标签,添加样式,将img标签添加到kbd中
+        let img = creatTag('img', '', null, kbd);
         // 判断img是否正常加载
         if (hash[row[j]]) {
             // 为img标签设置src
@@ -111,14 +101,9 @@ for (let i = 0; i < arr.length; i++) {
         img.onerror = function (event) {
             event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
         };
-        // 添加img标签到kbd标签中
-        kbd.appendChild(img);
-        // 创建button标签
-        let kbdButton = document.createElement('button');
-        // 添加内容到button标签中
-        kbdButton.textContent = '编辑';
-        // 添加button标签到kbd标签中
-        kbd.appendChild(kbdButton);
+
+        // 创建button标签,添加样式,添加内容到button标签中,将button标签添加到kbd中
+        let kbdButton = creatTag('button', '', '编辑', kbd);
         // 将row[j]绑定到button的id上
         kbdButton.id = row[j];
         // 注册button标签的点击事件
@@ -140,7 +125,7 @@ for (let i = 0; i < arr.length; i++) {
     }
 }
 
-// 监听页面按键按下的事件
+// 3、监听页面按键按下的事件
 document.onkeypress = function (event) {
     // 保存每次按下的每个按键信息
     let keys = event.key;
@@ -148,3 +133,18 @@ document.onkeypress = function (event) {
     let webSite = hash[keys];
     window.open('http://' + webSite, '_blank');
 };
+
+// 封装的函数
+// 1、获取备份存储的函数
+function getFromLocalStorage(name) {
+    return JSON.parse(localStorage.getItem(name || 'null'))
+}
+
+// 2、创建标签添加样式的函数
+function creatTag(tagName, className, textContent, insertTag) {
+    let element = document.createElement(tagName);
+    element.className = className;
+    element.textContent = textContent;
+    let insert = insertTag.appendChild(element);
+    return insert;
+}
