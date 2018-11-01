@@ -7,6 +7,45 @@ a {
     text-decoration: none;
 }
 
+body {
+    background: grey url("./wall.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.row {
+    margin: 20px;
+}
+
+.key {
+    font: 16px 'Helvetica';
+    width: 50px;
+    height: 40px;
+    background:linear-gradient(to bottom,#292929 0%,#111 100%);
+    color: #c5c5c5;
+    border: 1px solid #373737;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px #1a1b1c,0 0 0 2px #1f2020,0 3px 0 2px #080808;
+    position: relative;
+}
+
+.row .key {
+    margin: 0 10px;
+}
+
+.row .key img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 4px;
+    bottom: 2px;
+}
+
+.row .key .text {
+    position: absolute;
+    top: 4px;
+    left: 2px;
+}
+
 kbd {
     border: 1px solid red;
     width: 4em;
@@ -28,17 +67,23 @@ kbd:hover > button {
 }
 
 main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
 
 #wrapper {
     display: inline-block;
+    background:rgba(255,255,255,0.2);
+    border-radius: 10px;
 }
 
 #wrapper > div:nth-child(2) {
-    margin-left: 2em;
+    margin-left: -22px;
 }
 
 #wrapper > div:nth-child(3) {
-    margin-left: 4em;
+    margin-left: -80px;
 }
