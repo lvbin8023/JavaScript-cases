@@ -1,67 +1,14 @@
 let A = {
-    0: {
-        0: 'q',
-        1: 'w',
-        2: 'e',
-        3: 'r',
-        4: 't',
-        5: 'y',
-        6: 'u',
-        7: 'i',
-        8: 'o',
-        9: 'p',
-        length: 10
-    },
-    1: {
-        0: 'a',
-        1: 's',
-        2: 'd',
-        3: 'f',
-        4: 'g',
-        5: 'h',
-        6: 'j',
-        7: 'k',
-        8: 'l',
-        length: 9
-    },
-    2: {
-        0: 'z',
-        1: 'x',
-        2: 'c',
-        3: 'v',
-        4: 'b',
-        5: 'n',
-        6: 'm',
-        length: 7
-    },
-    'length': 3
+    0: {0: 'q', 1: 'w', 2: 'e', 3: 'r', 4: 't', 5: 'y', 6: 'u', 7: 'i', 8: 'o', 9: 'p', length: 10},
+    1: {0: 'a', 1: 's', 2: 'd', 3: 'f', 4: 'g', 5: 'h', 6: 'j', 7: 'k', 8: 'l', length: 9},
+    2: {0: 'z', 1: 'x', 2: 'c', 3: 'v', 4: 'b', 5: 'n', 6: 'm', length: 7},
+    length: 3
 };
-let H = {
-    'q': 'www.qq.com',
-    'w': 'www.weibo.com',
-    'e': 'www.ele.me',
-    'r': 'www.renren.com',
-    't': 'tencent.com',
-    'y': 'www.yahoo.com',
-    'u': 'www.uc.cn',
-    'i': 'www.iplaysoft.com',
-    'o': 'www.opera.com',
-    'p': 'tv.pptv.com',
-    'a': 'www.apple.com',
-    's': 'www.sogou.com',
-    'd': 'www.douban.com',
-    'f': 'www.facebook.com',
-    'g': 'www.google.com',
-    'h': 'www.hupu.com',
-    'j': 'www.jianshu.com',
-    'k': 'www.kugou.com',
-    'l': 'cn.linkedin.com',
-    'z': 'www.zhihu.com',
-    'x': 'www.mi.com',
-    'c': 'www.canon.com.cn',
-    'v': 'www.vivo.com.cn',
-    'b': 'getbootstrap.com',
-    'n': 'http://www.newbalance.com.cn/',
+let H = {'q': 'www.qq.com', 'w': 'www.weibo.com', 'e': 'www.ele.me', 'r': 'www.renren.com', 't': 'tencent.com',
+    'y': 'www.yahoo.com', 'u': 'www.uc.cn', 'i': 'www.iplaysoft.com', 'o': 'www.opera.com', 'p': 'tv.pptv.com',
+    'a': 'www.apple.com', 's': 'www.sogou.com', 'd': 'www.douban.com', 'f': 'www.facebook.com', 'g': 'www.google.com',
+    'h': 'www.hupu.com', 'j': 'www.jianshu.com', 'k': 'www.kugou.com', 'l': 'cn.linkedin.com', 'z': 'www.zhihu.com',
+    'x': 'www.mi.com', 'c': 'www.canon.com.cn', 'v': 'www.vivo.com.cn', 'b': 'getbootstrap.com', 'n': 'http://www.newbalance.com.cn/',
     'm': 'www.mclaren.com'
 };
 
@@ -76,6 +23,7 @@ generateKeyBoard(arr, hash); // 使用上面获得的赋值进行键盘生成
 
 // 3、监听用户在页面按键按下的事件
 listenToUser(H); // 传入参数
+
 
 // 封装的函数
 // 1、获取备份存储的函数
@@ -92,7 +40,7 @@ function creatTag(tagName, className, textContent, insertTag) {
     return insert;
 }
 
-// 3、页面按键按下的事件
+// 3、页面按键按下的事件函数
 function listenToUser(Hash) {
     document.onkeypress = function (event) {
         // 保存每次按下的每个按键信息
@@ -107,7 +55,7 @@ function listenToUser(Hash) {
 function init(Arr, Hash) {
     let arr = Arr;
     let hash = Hash;
-// 取出localStorage中的backup对应的hash
+    // 取出localStorage中的backup对应的hash
     let hashInStorage = getFromLocalStorage('backup');
     if (hashInStorage) {
         hash = hashInStorage;
@@ -118,11 +66,11 @@ function init(Arr, Hash) {
     }
 }
 
-//
+// 5、生成键盘的函数
 function generateKeyBoard(Arr, Hash) {
-// 获取id
+    // 获取id
     let divWrapper = document.getElementById('wrapper');
-// 遍历数组
+    // 遍历数组
     for (let i = 0; i < Arr.length; i++) {
         // 创建div标签,添加样式,将div标签添加到divWrapper中
         let divContainer = creatTag('div', 'row', null, divWrapper);
@@ -132,10 +80,8 @@ function generateKeyBoard(Arr, Hash) {
         for (let j = 0; j < row.length; j++) {
             // 创建kbd标签,添加样式,将kbd标签添加到divContainer中
             let kbd = creatTag('kbd', 'key', null, divContainer);
-
             // 创建span标签,添加样式,添加内容到span标签中,将span标签添加到kbd中
             let span = creatTag('span', 'text', row[j], kbd);
-
             // 创建img标签,添加样式,将img标签添加到kbd中
             let img = creatTag('img', '', null, kbd);
             // 判断img是否正常加载
