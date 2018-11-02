@@ -1,5 +1,4 @@
-// 1、初始化数据
-let arr = {
+let A = {
     0: {
         0: 'q',
         1: 'w',
@@ -37,7 +36,7 @@ let arr = {
     },
     'length': 3
 };
-let hash = {
+let H = {
     'q': 'www.qq.com',
     'w': 'www.weibo.com',
     'e': 'www.ele.me',
@@ -65,74 +64,18 @@ let hash = {
     'n': 'http://www.newbalance.com.cn/',
     'm': 'www.mclaren.com'
 };
-// 取出localStorage中的backup对应的hash
-let hashInStorage = getFromLocalStorage('backup');
-if (hashInStorage) {
-    let hash = hashInStorage;
-}
+
+
+// 1、初始化数据
+let arrAndHash = init(A, H); // 传入的两个参数
+let arr = arrAndHash.arr; // 将函数返回的值进行赋值给arr
+let hash = arrAndHash.hash; // 将函数返回的值进行赋值给hash
 
 // 2、生成键盘
-// 获取id
-let divWrapper = document.getElementById('wrapper');
-// 遍历数组
-for (let i = 0; i < arr.length; i++) {
-    // 创建div标签,添加样式,将div标签添加到divWrapper中
-    let divContainer = creatTag('div', 'row', null, divWrapper);
-    // 把每次遍历出来的数组存储到row中
-    let row = arr[i];
-    // 遍历每个数组row
-    for (let j = 0; j < row.length; j++) {
-        // 创建kbd标签,添加样式,将kbd标签添加到divContainer中
-        let kbd = creatTag('kbd', 'key', null, divContainer);
+generateKeyBoard(arr, hash); // 使用上面获得的赋值进行键盘生成
 
-        // 创建span标签,添加样式,添加内容到span标签中,将span标签添加到kbd中
-        let span = creatTag('span', 'text', row[j], kbd);
-
-        // 创建img标签,添加样式,将img标签添加到kbd中
-        let img = creatTag('img', '', null, kbd);
-        // 判断img是否正常加载
-        if (hash[row[j]]) {
-            // 为img标签设置src
-            img.src = 'http://' + hash[row[j]] + '/favicon.ico';
-        } else {
-            img.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
-        }
-        // 监听img下载情况
-        img.onerror = function (event) {
-            event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
-        };
-
-        // 创建button标签,添加样式,添加内容到button标签中,将button标签添加到kbd中
-        let kbdButton = creatTag('button', '', '编辑', kbd);
-        // 将row[j]绑定到button的id上
-        kbdButton.id = row[j];
-        // 注册button标签的点击事件
-        kbdButton.onclick = function (event) {
-            let button2 = event.target;
-            let img2 = button2.previousSibling;
-            // 把每次编辑button的id保存在key中
-            let key = button2.id;
-            // 把每次输入的网址存储到webUrl中
-            let webUrl = prompt('请输入网址');
-            img2.src = 'http://' + webUrl + '/favicon.ico';
-            img2.onerror = function (event) {
-                event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
-            };
-            // 把webUrl保存到hash中
-            hash[key] = webUrl;
-            localStorage.setItem('backup', JSON.stringify(hash))
-        }
-    }
-}
-
-// 3、监听页面按键按下的事件
-document.onkeypress = function (event) {
-    // 保存每次按下的每个按键信息
-    let keys = event.key;
-    // 将hash中的网址保存到webSite中
-    let webSite = hash[keys];
-    window.open('http://' + webSite, '_blank');
-};
+// 3、监听用户在页面按键按下的事件
+listenToUser(H); // 传入参数
 
 // 封装的函数
 // 1、获取备份存储的函数
@@ -147,4 +90,86 @@ function creatTag(tagName, className, textContent, insertTag) {
     element.textContent = textContent;
     let insert = insertTag.appendChild(element);
     return insert;
+}
+
+// 3、页面按键按下的事件
+function listenToUser(Hash) {
+    document.onkeypress = function (event) {
+        // 保存每次按下的每个按键信息
+        let keys = event.key;
+        // 将hash中的网址保存到webSite中
+        let webSite = Hash[keys];
+        window.open('http://' + webSite, '_blank');
+    };
+}
+
+// 4、初始化数据init的函数
+function init(Arr, Hash) {
+    let arr = Arr;
+    let hash = Hash;
+// 取出localStorage中的backup对应的hash
+    let hashInStorage = getFromLocalStorage('backup');
+    if (hashInStorage) {
+        hash = hashInStorage;
+    }
+    return {
+        arr: arr,
+        hash: hash
+    }
+}
+
+//
+function generateKeyBoard(Arr, Hash) {
+// 获取id
+    let divWrapper = document.getElementById('wrapper');
+// 遍历数组
+    for (let i = 0; i < Arr.length; i++) {
+        // 创建div标签,添加样式,将div标签添加到divWrapper中
+        let divContainer = creatTag('div', 'row', null, divWrapper);
+        // 把每次遍历出来的数组存储到row中
+        let row = Arr[i];
+        // 遍历每个数组row
+        for (let j = 0; j < row.length; j++) {
+            // 创建kbd标签,添加样式,将kbd标签添加到divContainer中
+            let kbd = creatTag('kbd', 'key', null, divContainer);
+
+            // 创建span标签,添加样式,添加内容到span标签中,将span标签添加到kbd中
+            let span = creatTag('span', 'text', row[j], kbd);
+
+            // 创建img标签,添加样式,将img标签添加到kbd中
+            let img = creatTag('img', '', null, kbd);
+            // 判断img是否正常加载
+            if (Hash[row[j]]) {
+                // 为img标签设置src
+                img.src = 'http://' + Hash[row[j]] + '/favicon.ico';
+            } else {
+                img.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+            }
+            // 监听img下载情况
+            img.onerror = function (event) {
+                event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+            };
+
+            // 创建button标签,添加样式,添加内容到button标签中,将button标签添加到kbd中
+            let kbdButton = creatTag('button', '', '编辑', kbd);
+            // 将row[j]绑定到button的id上
+            kbdButton.id = row[j];
+            // 注册button标签的点击事件
+            kbdButton.onclick = function (event) {
+                let button2 = event.target;
+                let img2 = button2.previousSibling;
+                // 把每次编辑button的id保存在key中
+                let key = button2.id;
+                // 把每次输入的网址存储到webUrl中
+                let webUrl = prompt('请输入网址');
+                img2.src = 'http://' + webUrl + '/favicon.ico';
+                img2.onerror = function (event) {
+                    event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png';
+                };
+                // 把webUrl保存到hash中
+                Hash[key] = webUrl;
+                localStorage.setItem('backup', JSON.stringify(Hash))
+            }
+        }
+    }
 }
