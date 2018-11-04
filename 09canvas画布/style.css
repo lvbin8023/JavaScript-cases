@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#canvas {
+    background: green;
+}
+
+.active {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.active #brush {
+    display: none;
+}
+
+.active.x #brush {
+    display: inline-block;
+}
+
+.active.x #eraser {
+    display: none;
+}
