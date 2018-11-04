@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas画板</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #canvas {
+      background: green;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="600"></canvas>
+
+<script>
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+
+
+    // 画线
+    function drawLine(x1, y1, x2, y2, color) {
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.lineWidth = 3;
+        context.strokeStyle = color;
+        context.stroke();
+    }
+
+    let painting = false;
+    let lastPoint = {x: null, y: null};
+    canvas.onmousedown = function (event) {
+        painting = true;
+        let x = event.clientX;
+        let y = event.clientY;
+        lastPoint = {x: x, y: y};
+    };
+
+    canvas.onmousemove = function (event) {
+        if (painting) {
+            let x = event.clientX;
+            let y = event.clientY;
+            let newPoint = {x: x, y: y};
+            drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y, 'red');
+            lastPoint = newPoint;
+        }
+    };
+
+    canvas.onmouseup = function () {
+        painting = false;
+    };
+
+    // 实时获取页面宽高
+    function pageWidthHeight() {
+        let pageWidth = document.documentElement.clientWidth;
+        let pageHeight = document.documentElement.clientHeight;
+        canvas.width = pageWidth;
+        canvas.height = pageHeight;
+    }
+
+    pageWidthHeight();
+
+    window.onresize = function () {
+        pageWidthHeight()
+    }
+</script>
+</body>
+</html>
