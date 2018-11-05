@@ -8,7 +8,7 @@ let brush = document.getElementById('brush');
 autoSetCanvasSize(canvas);
 
 // 监听鼠标事件
-listenToMouse(canvas);
+listenToUser(canvas);
 
 
 // 注册按钮点击事件
@@ -49,40 +49,75 @@ function drawLine(x1, y1, x2, y2, color) {
     context.stroke();
 }
 
-function listenToMouse(canvas) {
+function listenToUser(canvas) {
     let using = false;
     let lastPoint = {x: null, y: null};
-    // 鼠标键按下事件
-    canvas.onmousedown = function (event) {
-        let x = event.clientX;
-        let y = event.clientY;
-        using = true;
-        if (eraseEnabled) {
-            context.clearRect(x - 5, y - 5, 10, 10);
-        } else {
-            lastPoint = {x: x, y: y};
+    // 特性检测
+    if (document.body.ontouchstart !== undefined) {
+        // 触屏设备
+        canvas.ontouchstart = function (event) {
+            let x = event.touches[0].clientX;
+            let y = event.touches[0].clientY;
+            console.log(x,y);
+            using = true;
+            if (eraseEnabled) {
+                context.clearRect(x - 5, y - 5, 10, 10);
+            } else {
+                lastPoint = {x: x, y: y};
+            }
+        };
+        canvas.ontouchmove = function (event) {
+            let x = event.touches[0].clientX;
+            let y = event.touches[0].clientY;
+            if (!using) {
+                return false
+            }
+            if (eraseEnabled) {
+                context.clearRect(x - 5, y - 5, 10, 10);
+            } else {
+                let newPoint = {x: x, y: y};
+                drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y, 'black');
+                lastPoint = newPoint;
+            }
+        };
+        canvas.ontouchend = function () {
+            // 停止使用
+            using = false;
         }
-    };
+    } else {
+        // 非触屏设备
+        // 鼠标键按下事件
+        canvas.onmousedown = function (event) {
+            let x = event.clientX;
+            let y = event.clientY;
+            using = true;
+            if (eraseEnabled) {
+                context.clearRect(x - 5, y - 5, 10, 10);
+            } else {
+                lastPoint = {x: x, y: y};
+            }
+        };
 
-    // 鼠标移动事件
-    canvas.onmousemove = function (event) {
-        let x = event.clientX;
-        let y = event.clientY;
-        if (!using) {
-            return false
-        }
-        if (eraseEnabled) {
-            context.clearRect(x - 5, y - 5, 10, 10);
-        } else {
-            let newPoint = {x: x, y: y};
-            drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y, 'black');
-            lastPoint = newPoint;
-        }
-    };
+        // 鼠标移动事件
+        canvas.onmousemove = function (event) {
+            let x = event.clientX;
+            let y = event.clientY;
+            if (!using) {
+                return false
+            }
+            if (eraseEnabled) {
+                context.clearRect(x - 5, y - 5, 10, 10);
+            } else {
+                let newPoint = {x: x, y: y};
+                drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y, 'black');
+                lastPoint = newPoint;
+            }
+        };
 
-    // 鼠标抬起事件
-    canvas.onmouseup = function () {
-        // 停止使用
-        using = false;
-    };
+        // 鼠标抬起事件
+        canvas.onmouseup = function () {
+            // 停止使用
+            using = false;
+        };
+    }
 }
