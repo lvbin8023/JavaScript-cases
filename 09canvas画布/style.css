@@ -3,24 +3,32 @@ body {
     padding: 0;
 }
 
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
 #canvas {
-    background: green;
+    display: block;
 }
 
-.active {
+.actions {
     position: fixed;
+    top: 0;
     left: 0;
-    bottom: 0;
+    padding: 20px;
 }
 
-.active #brush {
-    display: none;
+.actions svg {
+    width: 1.5em;
+    height: 1.5em;
+    transition: all 0.3s;
+    margin: 0 8px;
 }
 
-.active.x #brush {
-    display: inline-block;
-}
-
-.active.x #eraser {
-    display: none;
+.actions svg.active {
+    fill: red;
+    transform: scale(1.2);
 }

@@ -1,8 +1,7 @@
 let canvas = document.getElementById('canvas');
 let context = canvas.getContext('2d');
-let active = document.getElementById('active');
+let pen = document.getElementById('pen');
 let eraser = document.getElementById('eraser');
-let brush = document.getElementById('brush');
 
 // 自动设置canvas的宽高，并自动监听页面宽高变化进行刷新
 autoSetCanvasSize(canvas);
@@ -13,13 +12,15 @@ listenToUser(canvas);
 
 // 注册按钮点击事件
 let eraseEnabled = false;
+pen.onclick = function () {
+    eraseEnabled = false;
+    pen.classList.add('active');
+    eraser.classList.remove('active');
+};
 eraser.onclick = function () {
     eraseEnabled = true;
-    active.className = 'active x'
-};
-brush.onclick = function () {
-    eraseEnabled = false;
-    active.className = 'active';
+    eraser.classList.add('active');
+    pen.classList.remove('active');
 };
 
 
