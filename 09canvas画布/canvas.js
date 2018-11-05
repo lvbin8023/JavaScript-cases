@@ -58,6 +58,7 @@ download.onclick = function () {
     let link = document.createElement('a');
     document.body.appendChild(link);
     link.setAttribute('download', 'myImg');
+    link.setAttribute('target', '_blank');
     link.setAttribute('href', url);
     link.click();
 };
