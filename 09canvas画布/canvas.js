@@ -14,7 +14,7 @@ let download = getElementId('download');
 let lineWidth = 5;
 
 // 自动设置canvas的宽高，并自动监听页面宽高变化进行刷新
-autoSetCanvasSize(canvas);
+autoSetCanvasSizeColor(canvas, '#fff');
 
 // 监听鼠标事件
 listenToUser(canvas);
@@ -74,13 +74,15 @@ function penColor(id, color, className, one, two, three) {
     };
 }
 
-// 封装的实时自动获取页面宽高的函数
-function autoSetCanvasSize(canvas) {
+// 封装的实时自动获取页面宽高并设置背景颜色的函数
+function autoSetCanvasSizeColor(canvas, color) {
     function setCanvasSize() {
         let pageWidth = document.documentElement.clientWidth;
         let pageHeight = document.documentElement.clientHeight;
         canvas.width = pageWidth;
         canvas.height = pageHeight;
+        context.fillStyle = color;
+        context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     setCanvasSize();
