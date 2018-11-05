@@ -27,35 +27,22 @@ eraser.onclick = function () {
     pen.classList.remove('active');
 };
 
-// 选择颜色
-red.onclick = function () {
-    context.strokeStyle= 'red';
-    red.classList.add('active');
-    yellow.classList.remove('active');
-    blue.classList.remove('active');
-    black.classList.remove('active');
-};
-yellow.onclick = function () {
-    context.strokeStyle= 'yellow';
-    yellow.classList.add('active');
-    red.classList.remove('active');
-    blue.classList.remove('active');
-    black.classList.remove('active');
-};
-blue.onclick = function () {
-    context.strokeStyle= 'blue';
-    blue.classList.add('active');
-    red.classList.remove('active');
-    yellow.classList.remove('active');
-    black.classList.remove('active');
-};
-black.onclick = function () {
-    context.strokeStyle= 'black';
-    black.classList.add('active');
-    red.classList.remove('active');
-    yellow.classList.remove('active');
-    blue.classList.remove('active');
-};
+// 画笔颜色
+penColor(red,'red','active',yellow,blue,black);
+penColor(yellow,'yellow','active',red,blue,black);
+penColor(blue,'blue','active',red,yellow,black);
+penColor(black,'black','active',red,yellow,blue);
+
+// 封装的颜色函数
+function penColor(id,color,className,one,two,three) {
+    id.onclick = function () {
+        context.strokeStyle = color;
+        id.classList.add(className);
+        one.classList.remove(className);
+        two.classList.remove(className);
+        three.classList.remove(className);
+    };
+}
 
 
 // 封装的实时自动获取页面宽高的函数
@@ -66,6 +53,7 @@ function autoSetCanvasSize(canvas) {
         canvas.width = pageWidth;
         canvas.height = pageHeight;
     }
+
     setCanvasSize();
     window.onresize = function () {
         setCanvasSize()
@@ -90,7 +78,7 @@ function listenToUser(canvas) {
         canvas.ontouchstart = function (event) {
             let x = event.touches[0].clientX;
             let y = event.touches[0].clientY;
-            console.log(x,y);
+            console.log(x, y);
             using = true;
             if (eraseEnabled) {
                 context.clearRect(x - 5, y - 5, 10, 10);
