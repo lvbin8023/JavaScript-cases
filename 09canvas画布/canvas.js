@@ -2,6 +2,10 @@ let canvas = document.getElementById('canvas');
 let context = canvas.getContext('2d');
 let pen = document.getElementById('pen');
 let eraser = document.getElementById('eraser');
+let red = document.getElementById('red');
+let yellow = document.getElementById('yellow');
+let blue = document.getElementById('blue');
+let black = document.getElementById('black');
 
 // 自动设置canvas的宽高，并自动监听页面宽高变化进行刷新
 autoSetCanvasSize(canvas);
@@ -23,6 +27,36 @@ eraser.onclick = function () {
     pen.classList.remove('active');
 };
 
+// 选择颜色
+red.onclick = function () {
+    context.strokeStyle= 'red';
+    red.classList.add('active');
+    yellow.classList.remove('active');
+    blue.classList.remove('active');
+    black.classList.remove('active');
+};
+yellow.onclick = function () {
+    context.strokeStyle= 'yellow';
+    yellow.classList.add('active');
+    red.classList.remove('active');
+    blue.classList.remove('active');
+    black.classList.remove('active');
+};
+blue.onclick = function () {
+    context.strokeStyle= 'blue';
+    blue.classList.add('active');
+    red.classList.remove('active');
+    yellow.classList.remove('active');
+    black.classList.remove('active');
+};
+black.onclick = function () {
+    context.strokeStyle= 'black';
+    black.classList.add('active');
+    red.classList.remove('active');
+    yellow.classList.remove('active');
+    blue.classList.remove('active');
+};
+
 
 // 封装的实时自动获取页面宽高的函数
 function autoSetCanvasSize(canvas) {
@@ -32,21 +66,18 @@ function autoSetCanvasSize(canvas) {
         canvas.width = pageWidth;
         canvas.height = pageHeight;
     }
-
     setCanvasSize();
-
     window.onresize = function () {
         setCanvasSize()
     }
 }
 
 // 封装的画线函数
-function drawLine(x1, y1, x2, y2, color) {
+function drawLine(x1, y1, x2, y2) {
     context.beginPath();
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
     context.lineWidth = 3;
-    context.strokeStyle = color;
     context.stroke();
 }
 
@@ -77,7 +108,7 @@ function listenToUser(canvas) {
                 context.clearRect(x - 5, y - 5, 10, 10);
             } else {
                 let newPoint = {x: x, y: y};
-                drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y, 'black');
+                drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
                 lastPoint = newPoint;
             }
         };
