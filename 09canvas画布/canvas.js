@@ -1,11 +1,16 @@
 let canvas = document.getElementById('canvas');
 let context = canvas.getContext('2d');
+
 let pen = document.getElementById('pen');
 let eraser = document.getElementById('eraser');
 let red = document.getElementById('red');
 let yellow = document.getElementById('yellow');
 let blue = document.getElementById('blue');
 let black = document.getElementById('black');
+let thin = document.getElementById('thin');
+let thick = document.getElementById('thick');
+let clear = document.getElementById('clear');
+let lineWidth = 5;
 
 // 自动设置canvas的宽高，并自动监听页面宽高变化进行刷新
 autoSetCanvasSize(canvas);
@@ -28,13 +33,27 @@ eraser.onclick = function () {
 };
 
 // 画笔颜色
-penColor(red,'red','active',yellow,blue,black);
-penColor(yellow,'yellow','active',red,blue,black);
-penColor(blue,'blue','active',red,yellow,black);
-penColor(black,'black','active',red,yellow,blue);
+penColor(red, 'red', 'active', yellow, blue, black);
+penColor(yellow, 'yellow', 'active', red, blue, black);
+penColor(blue, 'blue', 'active', red, yellow, black);
+penColor(black, 'black', 'active', red, yellow, blue);
+
+// 画笔粗细
+thin.onclick = function () {
+    lineWidth = 5;
+};
+thick.onclick = function () {
+    lineWidth = 20;
+};
+// 清空画布
+clear.onclick = function () {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    // 清除橡皮擦开启状态
+    eraser.classList.remove('active');
+};
 
 // 封装的颜色函数
-function penColor(id,color,className,one,two,three) {
+function penColor(id, color, className, one, two, three) {
     id.onclick = function () {
         context.strokeStyle = color;
         id.classList.add(className);
@@ -43,7 +62,6 @@ function penColor(id,color,className,one,two,three) {
         three.classList.remove(className);
     };
 }
-
 
 // 封装的实时自动获取页面宽高的函数
 function autoSetCanvasSize(canvas) {
@@ -65,10 +83,11 @@ function drawLine(x1, y1, x2, y2) {
     context.beginPath();
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
-    context.lineWidth = 3;
+    context.lineWidth = lineWidth;
     context.stroke();
 }
 
+// 封装的监听用户使用的函数
 function listenToUser(canvas) {
     let using = false;
     let lastPoint = {x: null, y: null};
