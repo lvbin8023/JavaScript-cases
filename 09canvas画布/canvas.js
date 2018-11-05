@@ -1,15 +1,16 @@
-let canvas = document.getElementById('canvas');
+let canvas = getElementId('canvas');
 let context = canvas.getContext('2d');
 
-let pen = document.getElementById('pen');
-let eraser = document.getElementById('eraser');
-let red = document.getElementById('red');
-let yellow = document.getElementById('yellow');
-let blue = document.getElementById('blue');
-let black = document.getElementById('black');
-let thin = document.getElementById('thin');
-let thick = document.getElementById('thick');
-let clear = document.getElementById('clear');
+let pen = getElementId('pen');
+let eraser = getElementId('eraser');
+let red = getElementId('red');
+let yellow = getElementId('yellow');
+let blue = getElementId('blue');
+let black = getElementId('black');
+let thin = getElementId('thin');
+let thick = getElementId('thick');
+let clear = getElementId('clear');
+let download = getElementId('download');
 let lineWidth = 5;
 
 // 自动设置canvas的宽高，并自动监听页面宽高变化进行刷新
@@ -50,6 +51,15 @@ clear.onclick = function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
     // 清除橡皮擦开启状态
     eraser.classList.remove('active');
+};
+// 下载保存
+download.onclick = function () {
+    let url = canvas.toDataURL("image/png");
+    let link = document.createElement('a');
+    document.body.appendChild(link);
+    link.setAttribute('download', 'myImg');
+    link.setAttribute('href', url);
+    link.click();
 };
 
 // 封装的颜色函数
@@ -159,4 +169,9 @@ function listenToUser(canvas) {
             using = false;
         };
     }
+}
+
+// 封装的获取元素id函数
+function getElementId(id) {
+    return document.getElementById(id);
 }
