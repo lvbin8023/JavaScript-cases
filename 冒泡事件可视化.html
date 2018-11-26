@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>冒泡事件可视化</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .red.active {
+      background: red;
+    }
+
+    .orange.active {
+      background: orange;
+    }
+
+    .yellow.active {
+      background: yellow;
+    }
+
+    .green.active {
+      background: green;
+    }
+
+    .cyan.active {
+      background: cyan;
+    }
+
+    .blue.active {
+      background: blue;
+    }
+
+    .purple.active {
+      background: purple;
+    }
+
+    div.red {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    div {
+      border: 1px solid black;
+      padding: 10px;
+      transition: all 0.5s;
+      display: flex;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+<div class="red">
+  <div class="orange">
+    <div class="yellow">
+      <div class="green">
+        <div class="cyan">
+          <div class="blue">
+            <div class="purple"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    let n = 0;
+    $('div').on('click', (event) => {
+        setTimeout(() => {
+            $(event.currentTarget).addClass('active');
+        }, n * 500);
+        n += 1;
+    });
+</script>
+</body>
+</html>
