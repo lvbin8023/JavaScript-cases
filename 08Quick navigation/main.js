@@ -97,7 +97,7 @@ function generateKeyBoard(Arr, Hash) {
             };
 
             // 创建button标签,添加样式,添加内容到button标签中,将button标签添加到kbd中
-            let kbdButton = creatTag('button', '', '编辑', kbd);
+            let kbdButton = creatTag('button', '', 'Edit', kbd);
             // 将row[j]绑定到button的id上
             kbdButton.id = row[j];
             // 注册button标签的点击事件
